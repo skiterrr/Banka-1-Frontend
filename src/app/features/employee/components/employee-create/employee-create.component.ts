@@ -23,14 +23,16 @@ export class EmployeeCreateComponent implements OnInit {
   }
 
   private initForm(): void {
-    // Imena kontrola ostaju na engleskom zbog HTML-a
     this.employeeForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       birthDate: ['', Validators.required],
-      gender: ['M', Validators.required]
+      gender: ['', Validators.required],
+      role: ['', Validators.required],
+      department: ['', Validators.required],
+      position: ['', Validators.required]
     });
   }
 
@@ -42,22 +44,24 @@ export class EmployeeCreateComponent implements OnInit {
 
     const formValues = this.employeeForm.value;
 
-    // MAPIRANJE: Pretvaramo engleska polja sa forme u srpska polja za backend
-    const payload: Employee = {
+    // MAPIRANJE: Pretvaramo polja iz forme u format koji backend očekuje (prema JSON-u)
+    const payload: any = {
       ime: formValues.firstName,
       prezime: formValues.lastName,
       email: formValues.email,
       brojTelefona: formValues.phoneNumber,
       datumRodjenja: formValues.birthDate,
       pol: formValues.gender,
-      aktivan: true, // Po defaultu novi radnik je aktivan
-      pozicija: 'Regular', // Neka default pozicija
-      permisije: []
+      pozicija: formValues.position,
+      departman: formValues.department,
+      role: formValues.role,
+      aktivan: true,
+      username: formValues.email.split('@')[0], // Generišemo privremeni username
+      password: "Sifra123!" // Default šifra
     };
 
     this.employeeService.createEmployee(payload).subscribe({
       next: () => {
-        // Kad backend odgovori sa 200 OK, vraćamo se na tabelu
         this.router.navigate(['/employees']);
       },
       error: (err) => {

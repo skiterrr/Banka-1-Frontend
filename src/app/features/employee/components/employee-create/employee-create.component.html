@@ -1,81 +1,84 @@
 <div class="page-wrapper">
-  <header class="top-header">
-    <div class="header-text">
-      <h1>Add New Employee</h1>
-      <p>Unos novog zaposlenog u sistem</p>
-    </div>
-  </header>
+  <div class="form-card">
+    <h1 class="form-title">Add employee</h1>
 
-  <div class="main-content">
-    <div class="form-card">
-      <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="figma-form">
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
         
-        <div class="form-row">
-          <div class="form-group">
-            <label for="firstName">First Name <span class="text-danger">*</span></label>
-            <input id="firstName" type="text" formControlName="firstName" placeholder="e.g. Marko"
-                   [class.input-error]="employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched">
-            <span class="error-message" *ngIf="employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched">
-              Ime je obavezno i mora imati bar 2 karaktera.
-            </span>
-          </div>
-
-          <div class="form-group">
-            <label for="lastName">Last Name <span class="text-danger">*</span></label>
-            <input id="lastName" type="text" formControlName="lastName" placeholder="e.g. Markovic"
-                   [class.input-error]="employeeForm.get('lastName')?.invalid && employeeForm.get('lastName')?.touched">
-            <span class="error-message" *ngIf="employeeForm.get('lastName')?.invalid && employeeForm.get('lastName')?.touched">
-              Prezime je obavezno i mora imati bar 2 karaktera.
-            </span>
-          </div>
+        <div class="form-group">
+          <label>First Name <span class="required">*</span></label>
+          <input type="text" formControlName="firstName" placeholder="Enter first name"
+                 [class.input-error]="employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched">
+          <span class="error-msg" *ngIf="employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched">
+            Ime je obavezno.
+          </span>
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="email">Email <span class="text-danger">*</span></label>
-            <input id="email" type="email" formControlName="email" placeholder="marko@banka.rs"
-                   [class.input-error]="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched">
-            <span class="error-message" *ngIf="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched">
-              Unesite validnu email adresu.
-            </span>
-          </div>
-
-          <div class="form-group">
-            <label for="phoneNumber">Phone Number <span class="text-danger">*</span></label>
-            <input id="phoneNumber" type="text" formControlName="phoneNumber" placeholder="+381601234567"
-                   [class.input-error]="employeeForm.get('phoneNumber')?.invalid && employeeForm.get('phoneNumber')?.touched">
-            <span class="error-message" *ngIf="employeeForm.get('phoneNumber')?.invalid && employeeForm.get('phoneNumber')?.touched">
-              Broj telefona je obavezan.
-            </span>
-          </div>
+        <div class="form-group">
+          <label>Last Name <span class="required">*</span></label>
+          <input type="text" formControlName="lastName" placeholder="Enter last name"
+                 [class.input-error]="employeeForm.get('lastName')?.invalid && employeeForm.get('lastName')?.touched">
+          <span class="error-msg" *ngIf="employeeForm.get('lastName')?.invalid && employeeForm.get('lastName')?.touched">
+            Prezime je obavezno.
+          </span>
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="birthDate">Birth Date <span class="text-danger">*</span></label>
-            <input id="birthDate" type="date" formControlName="birthDate"
-                   [class.input-error]="employeeForm.get('birthDate')?.invalid && employeeForm.get('birthDate')?.touched">
-            <span class="error-message" *ngIf="employeeForm.get('birthDate')?.invalid && employeeForm.get('birthDate')?.touched">
-              Datum rođenja je obavezan.
-            </span>
-          </div>
-
-          <div class="form-group">
-            <label for="gender">Gender <span class="text-danger">*</span></label>
-            <select id="gender" formControlName="gender" class="custom-select"
-                    [class.input-error]="employeeForm.get('gender')?.invalid && employeeForm.get('gender')?.touched">
-              <option value="M">Male (M)</option>
-              <option value="Z">Female (Z)</option>
-            </select>
-          </div>
+        <div class="form-group">
+          <label>Phone number <span class="required">*</span></label>
+          <input type="text" formControlName="phoneNumber" placeholder="Enter phone number"
+                 [class.input-error]="employeeForm.get('phoneNumber')?.invalid && employeeForm.get('phoneNumber')?.touched">
         </div>
 
-        <div class="form-actions">
-          <button type="button" class="btn-cancel" routerLink="/employees">Cancel</button>
-          <button type="submit" class="btn-submit" [disabled]="employeeForm.invalid">Save Employee</button>
+        <div class="form-group">
+          <label>Email <span class="required">*</span></label>
+          <input type="email" formControlName="email" placeholder="Enter email"
+                 [class.input-error]="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched">
         </div>
 
-      </form>
-    </div>
+        <div class="form-group">
+          <label>Birth date <span class="required">*</span></label>
+          <input type="date" formControlName="birthDate"
+                 [class.input-error]="employeeForm.get('birthDate')?.invalid && employeeForm.get('birthDate')?.touched">
+        </div>
+
+        <div class="form-group">
+          <label>Gender <span class="required">*</span></label>
+          <select formControlName="gender" class="custom-select"
+                  [class.input-error]="employeeForm.get('gender')?.invalid && employeeForm.get('gender')?.touched">
+            <option value="" disabled selected>Select gender</option>
+            <option value="M">Male</option>
+            <option value="Z">Female</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Role <span class="required">*</span></label>
+          <select formControlName="role" class="custom-select"
+                  [class.input-error]="employeeForm.get('role')?.invalid && employeeForm.get('role')?.touched">
+            <option value="" disabled selected>Select role</option>
+            <option value="ADMIN">Admin</option>
+            <option value="BASIC">Basic</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Department <span class="required">*</span></label>
+          <input type="text" formControlName="department" placeholder="Enter department"
+                 [class.input-error]="employeeForm.get('department')?.invalid && employeeForm.get('department')?.touched">
+        </div>
+
+        <div class="form-group">
+          <label>Position <span class="required">*</span></label>
+          <input type="text" formControlName="position" placeholder="Enter position"
+                 [class.input-error]="employeeForm.get('position')?.invalid && employeeForm.get('position')?.touched">
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" routerLink="/employees">Cancel</button>
+        <button type="submit" class="btn-save" [disabled]="employeeForm.invalid">Save</button>
+      </div>
+    </form>
   </div>
 </div>
