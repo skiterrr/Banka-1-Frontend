@@ -10,7 +10,7 @@
       <div class="modal-header">
         <div>
           <h2 class="modal-title">Account details</h2>
-          <p class="modal-subtitle">Personal account overview</p>
+          <p class="modal-subtitle">{{ getModalSubtitle() }}</p>
         </div>
 
         <button
@@ -64,6 +64,37 @@
             <span class="detail-value detail-value-strong">
               {{ formatAmount(account.balance) }} {{ account.currency }}
             </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="company-section" *ngIf="isBusinessAccount()">
+        <p class="section-title">Company details</p>
+
+        <div class="details-grid">
+          <div class="detail-row" *ngIf="account.name || account.companyName">
+            <span class="detail-label">Company name</span>
+            <span class="detail-value">{{ account.company?.name || account.companyName }}</span>
+          </div>
+
+          <div class="detail-row" *ngIf="account.company?.registrationNumber">
+            <span class="detail-label">Registration number</span>
+            <span class="detail-value">{{ account.company?.registrationNumber }}</span>
+          </div>
+
+          <div class="detail-row" *ngIf="account.company?.taxId">
+            <span class="detail-label">Tax ID</span>
+            <span class="detail-value">{{ account.company?.taxId }}</span>
+          </div>
+
+          <div class="detail-row" *ngIf="account.company?.activityCode">
+            <span class="detail-label">Activity code</span>
+            <span class="detail-value">{{ account.company?.activityCode }}</span>
+          </div>
+
+          <div class="detail-row" *ngIf="account.company?.address">
+            <span class="detail-label">Address</span>
+            <span class="detail-value">{{ account.company?.address }}</span>
           </div>
         </div>
       </div>

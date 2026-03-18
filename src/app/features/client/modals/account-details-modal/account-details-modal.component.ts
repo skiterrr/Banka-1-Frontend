@@ -13,6 +13,20 @@ export class AccountDetailsModalComponent {
   @Input() public account: Account | null = null;
   @Output() public close = new EventEmitter<void>();
 
+  public isBusinessAccount(): boolean {
+    if (!this.account) {
+      return false;
+    }
+
+    return ['DOO', 'AD', 'FOUNDATION', 'FOREIGN_BUSINESS'].includes(this.account.subtype);
+  }
+
+  public getModalSubtitle(): string {
+    return this.isBusinessAccount()
+      ? 'Business account overview'
+      : 'Personal account overview';
+  }
+
   public closeModal(): void {
     this.close.emit();
   }

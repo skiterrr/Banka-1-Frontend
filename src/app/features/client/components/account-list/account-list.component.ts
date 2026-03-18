@@ -154,19 +154,75 @@ export class AccountListComponent implements OnInit {
     //     monthlySpending: 0,
     //     createdAt: '2023-10-01T08:00:00',
     //     expiryDate: '2033-10-01T08:00:00'
+    //   },
+    //   {
+    //     id: 5,
+    //     name: 'Glavni poslovni račun',
+    //     accountNumber: '265000000001111112',
+    //     balance: 456780.55,
+    //     availableBalance: 438000.55,
+    //     reservedFunds: 18780.00,
+    //     currency: 'RSD',
+    //     status: 'ACTIVE',
+    //     subtype: 'DOO',
+    //     ownerId: 201,
+    //     ownerName: 'Petar Petrović',
+    //     employeeId: 7,
+    //     maintenanceFee: 990,
+    //     dailyLimit: 1500000,
+    //     monthlyLimit: 12000000,
+    //     dailySpending: 245000,
+    //     monthlySpending: 1780000,
+    //     createdAt: '2024-07-10T09:00:00',
+    //     expiryDate: '2034-07-10T09:00:00',
+    //     company: {
+    //       name: 'Tech Solutions DOO Novi Sad',
+    //       registrationNumber: '21987654',
+    //       taxId: '114567890',
+    //       activityCode: '6201',
+    //       address: 'Bulevar oslobođenja 15, Novi Sad'
+    //     }
+    //   },
+    //   {
+    //     id: 6,
+    //     name: 'Devizni poslovni račun',
+    //     accountNumber: '265000000001111122',
+    //     balance: 12540.80,
+    //     availableBalance: 11990.80,
+    //     reservedFunds: 550.00,
+    //     currency: 'EUR',
+    //     status: 'ACTIVE',
+    //     subtype: 'FOREIGN_BUSINESS',
+    //     ownerId: 201,
+    //     ownerName: 'Petar Petrović',
+    //     employeeId: 7,
+    //     maintenanceFee: 1200,
+    //     dailyLimit: 25000,
+    //     monthlyLimit: 200000,
+    //     dailySpending: 320,
+    //     monthlySpending: 8450,
+    //     createdAt: '2024-08-01T10:30:00',
+    //     expiryDate: '2034-08-01T10:30:00',
+    //     company: {
+    //       name: 'Tech Solutions DOO Novi Sad',
+    //       registrationNumber: '21987654',
+    //       taxId: '114567890',
+    //       activityCode: '6201',
+    //       address: 'Bulevar oslobođenja 15, Novi Sad'
+    //     }
     //   }
     // ];
-    //
+
     // this.accounts = mockAccounts
     //   .filter((acc) => acc.status === 'ACTIVE')
     //   .sort((a, b) => b.availableBalance - a.availableBalance);
-    //
+
     // if (this.accounts.length > 0) {
     //   this.selectedAccount = this.accounts[0];
     // }
-    //
+
     // this.isLoading = false;
-    //
+
   }
 
   /**
