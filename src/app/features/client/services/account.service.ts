@@ -133,13 +133,18 @@ export class AccountService {
    * Dohvata poslednjih N transakcija za dati račun.
    * Koristi se na početnoj strani za prikaz poslednjih 5 transakcija.
    */
+
+
+
+  //  'http://localhost/transactions/accounts/10101010101010101010?page=0&size=10' \
+
   getTransactions(
-    accountId: number,
+    accountNumber: number,
     page = 0,
     size = 5,
   ): Observable<Transaction[]> {
     return this.http
-      .get<TransactionPage>(`${this.baseUrl}/${accountId}/transactions`, {
+      .get<TransactionPage>(`${environment.apiUrl}/transactions/accounts/${accountNumber}`, {
         params: { page: page.toString(), size: size.toString() },
       })
       .pipe(map((res) => res.content));
@@ -172,14 +177,14 @@ export class AccountService {
 
   createFxAccount(payload: any): Observable<any> {
     return this.http.post(
-      `${environment.apiUrl}/employee/accounts/fx`,
+      `${this.api}/employee/accounts/fx`,
       payload,
     );
   }
 
   createCheckingAccount(payload: any): Observable<any> {
     return this.http.post(
-      `${environment.apiUrl}/employee/accounts/checking`,
+      `${this.api}/employee/accounts/checking`,
       payload,
     );
   }
@@ -193,7 +198,7 @@ export class AccountService {
     status: 'ACTIVE' | 'INACTIVE',
   ): Observable<void> {
     return this.http.put<void>(
-      `${environment.apiUrl}/employee/accounts/${accountNumber}/status`,
+      `${this.api}/employee/accounts/${accountNumber}/status`,
       {
         status,
       },

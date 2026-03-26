@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ClientService } from '../../services/client.service';
+import { AccountService } from '../../services/account.service';
 import { PaymentRecipient } from '../../models/account.model';
 import { NavbarComponent } from '../../../../shared/components/navbar/navbar.component';
 
@@ -20,6 +21,9 @@ export class PaymentRecipientsComponent implements OnInit {
   public isLoading = false;
 
   public searchQuery = '';
+  public accountNumber = '';
+  public page = 0;
+  public size = 10;
 
   public formMode: FormMode = null;
   public formName = '';
@@ -28,20 +32,39 @@ export class PaymentRecipientsComponent implements OnInit {
   public formLoading = false;
   private editingId: number | null = null;
 
-  constructor(private readonly clientService: ClientService) {}
+  constructor(
+    private readonly clientService: ClientService,
+    private readonly accountService: AccountService
+  ) {}
 
   public ngOnInit(): void {
-    this.loadRecipients();
+    this.loadAccountAndRecipients();
   }
 
   /**
-   * Dohvata sve primaоce plaćanja ulogovanog klijenta.
-   * Koristi mock podatke kao fallback dok backend nije spreman.
+   * Loads the user's account to get the account number, then loads recipients.
+   */
+  private loadAccountAndRecipients(): void {
+    this.accountService.getMyAccounts().subscribe({
+      next: (accounts) => {
+        if (accounts.length > 0) {
+          this.accountNumber = accounts[0].accountNumber;
+          this.loadRecipients();
+        }
+      },
+      error: () => {
+        this.isLoading = false;
+      }
+    });
+  }
+
+  /**
+   * Dohvata sve primaоce plaćanja za dati račun.
    */
   private loadRecipients(): void {
     this.isLoading = true;
 
-    this.clientService.getAllRecipients().subscribe({
+    this.clientService.getAllRecipients(this.accountNumber, this.page, this.size).subscribe({
       next: (recipients: PaymentRecipient[]) => {
         this.recipients = recipients;
         this.applyFilter();

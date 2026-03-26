@@ -121,96 +121,19 @@ export class HomeComponent implements OnInit {
 
   selectAccount(account: Account): void {
     this.selectedAccount = account;
-    this.loadTransactions(account.id);
+    this.loadTransactions(+account.accountNumber);
   }
 
   isSelected(account: Account): boolean {
     return this.selectedAccount?.id === account.id;
   }
 
-  // ── Učitavanje transakcija ───────────────────
-
-  /*test
-  loadTransactions(accountId: number): void {
+  loadTransactions(accountNumber: number): void {
     this.transactionsLoading = true;
     this.transactionsError = false;
     this.transactions = [];
 
-    // TODO: zameniti sa pravim API pozivom kad bek bude spreman:
-    // this.accountService.getTransactions(accountId, 0, 5).subscribe({...})
-    setTimeout(() => {
-      this.transactions = [
-        {
-          id: 1,
-          fromAccountId: accountId,
-          toAccountNumber: '265000000000111111',
-          recipientName: 'APPLE.COM',
-          amount: 3000,
-          currency: 'RSD',
-          status: 'COMPLETED',
-          description: 'Pretplata',
-          createdAt: '2026-03-03T10:00:00',
-          type: 'PAYMENT'
-        },
-        {
-          id: 2,
-          fromAccountId: accountId,
-          toAccountNumber: '265000000000222222',
-          recipientName: 'GLOVO',
-          amount: 2000,
-          currency: 'RSD',
-          status: 'FAILED',
-          description: 'Dostava',
-          createdAt: '2026-03-01T14:30:00',
-          type: 'PAYMENT'
-        },
-        {
-          id: 3,
-          fromAccountId: accountId,
-          toAccountNumber: '265000000000333333',
-          recipientName: 'LLC',
-          amount: 2787,
-          currency: 'RSD',
-          status: 'PENDING',
-          description: 'Usluge',
-          createdAt: '2026-03-01T09:15:00',
-          type: 'PAYMENT'
-        },
-        {
-          id: 4,
-          fromAccountId: accountId,
-          toAccountNumber: '265000000000444444',
-          recipientName: 'Bosch Inc',
-          amount: 50000,
-          currency: 'RSD',
-          status: 'PENDING',
-          description: 'Oprema',
-          createdAt: '2026-02-28T11:00:00',
-          type: 'PAYMENT'
-        },
-        {
-          id: 5,
-          fromAccountId: accountId,
-          toAccountNumber: '265000000000555555',
-          recipientName: 'Amazon EU',
-          amount: 8500,
-          currency: 'RSD',
-          status: 'COMPLETED',
-          description: 'Kupovina',
-          createdAt: '2026-02-27T16:45:00',
-          type: 'PAYMENT'
-        }
-      ];
-      this.transactionsLoading = false;
-    }, 500);
-  }*/
-
-  loadTransactions(accountId: number): void {
-    this.transactionsLoading = true;
-    this.transactionsError = false;
-    this.transactions = [];
-
-    this.accountService.getTransactions(accountId, 0, 5).subscribe({
+    this.accountService.getTransactions(accountNumber, 0, 5).subscribe({
       next: (data: Transaction[]) => {
         this.transactions = data ?? [];
         this.transactionsLoading = false;

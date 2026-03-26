@@ -253,11 +253,11 @@ export class AccountCreateComponent implements OnInit, OnDestroy {
 
     if (this.selectedKind === AccountKind.FX) {      
       const payload: FxAccountCreatePayload = {
-        nazivRacuna: '',
-        idVlasnika: ownerId,
+        idVlasnika: +ownerId,
         jmbg: '',
         currencyCode: this.selectedCurrency ?? 'EUR',
         tipRacuna: this.selectedOwnerType ?? AccountOwnerType.PERSONAL,
+        nazivRacuna: 'PERSONALNI',
         initialBalance,
         createCard
       };
@@ -285,12 +285,12 @@ export class AccountCreateComponent implements OnInit, OnDestroy {
       };
 
       const payload: CheckingAccountCreatePayload = {
-        nazivRacuna: '',
-        idVlasnika: ownerId,
+        idVlasnika: +ownerId,
         jmbg: '',
         vrstaRacuna: subtypeMap[this.selectedSubtype ?? ''] ?? 'STANDARDNI',
         initialBalance,
-        createCard
+        createCard,
+        nazivRacuna: subtypeMap[this.selectedSubtype ?? ''] ?? 'STANDARDNI'
       };
       if (companyPayload) {
         payload.firma = companyPayload;

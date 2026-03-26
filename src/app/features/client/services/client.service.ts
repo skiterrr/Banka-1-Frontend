@@ -113,20 +113,30 @@ export class ClientService {
   }
   //Primaoci placanja
 
-  getAllRecipients(): Observable<PaymentRecipient[]> {
-    return this.http.get<PaymentRecipient[]>(`${environment.apiUrl}/payment-recipients`);
+  getAllRecipients(accountNumber: string, page = 0, size = 10): Observable<PaymentRecipient[]> {
+    const params = new HttpParams()
+      .set('accountNumber', accountNumber)
+      .set('page', page.toString())
+      .set('size', size.toString());
+
+    return this.http.get<any>(`${environment.apiUrl}/transactions/api/all-payments`, { params }).pipe(
+      map(res => {
+        if (!res.content) return res;
+        return res.content;
+      })
+    );
   }
 
   createRecipient(name: string, accountNumber: string): Observable<PaymentRecipient> {
-    return this.http.post<PaymentRecipient>(`${environment.apiUrl}/payment-recipients`, { name, accountNumber });
+    return this.http.post<PaymentRecipient>(`${environment.apiUrl}/transactions/payments`, { name, accountNumber });
   }
 
   updateRecipient(id: number, name: string, accountNumber: string): Observable<PaymentRecipient> {
-    return this.http.put<PaymentRecipient>(`${environment.apiUrl}/payment-recipients/${id}`, { name, accountNumber });
+    return this.http.put<PaymentRecipient>(`${environment.apiUrl}/transactions/api/payments/${id}`, { name, accountNumber });
   }
 
   deleteRecipient(id: number): Observable<void> {
-    return this.http.delete<void>(`${environment.apiUrl}/payment-recipients/${id}`);
+    return this.http.delete<void>(`${environment.apiUrl}/transactions/api/payments/${id}`);
   }
 
 

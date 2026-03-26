@@ -102,7 +102,8 @@ export class NewPaymentComponent implements OnInit {
     }
 
   private executeTransaction(): void {
-    this.clientService.getAllRecipients().subscribe({
+    const senderAccount = this.paymentForm.get('senderAccount')?.value;
+    this.clientService.getAllRecipients(senderAccount).subscribe({
       next: (recipients) => {
         const receiverAccount = this.paymentForm.get('receiverAccount')?.value;
         const exists = recipients.some((r: PaymentRecipient) => r.accountNumber === receiverAccount);
