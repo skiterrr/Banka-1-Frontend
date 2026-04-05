@@ -1,0 +1,103 @@
+<div class="loan-list-container">
+  <!-- Header -->
+  <div class="loan-list-header">
+    <h1 class="loan-list-title">LISTA KREDITA</h1>
+    <button
+      class="btn-request-loan"
+      (click)="requestNewLoan()"
+      aria-label="Zahtev za novi kredit"
+    >
+      Zahtev za kredit +
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Učitavanje kredita...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !isLoading" class="error-container">
+    <p class="error-message">{{ error }}</p>
+    <button (click)="loadLoans()" class="btn-retry">Pokušaj ponovo</button>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!isLoading && loans.length === 0 && !error" class="empty-state">
+    <div class="empty-state-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 21H3V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v16z"></path>
+        <path d="M7 10h10M7 14h10M7 18h10"></path>
+      </svg>
+    </div>
+    <h2 class="empty-state-title">Nemate kredita</h2>
+    <p class="empty-state-message">
+      Čini se da još uvek nemate aktivnih kredita. Možete prikupiti novi kredit kliknutjem na dugme gore.
+    </p>
+    <button
+      class="btn-request-loan btn-request-loan-empty"
+      (click)="requestNewLoan()"
+    >
+      Zahtev za kredit +
+    </button>
+  </div>
+
+  <!-- Loans List -->
+  <div *ngIf="!isLoading && loans.length > 0" class="loans-grid">
+    <div
+      *ngFor="let loan of loans"
+      class="loan-card"
+    >
+      <div class="loan-card-header">
+        <div class="loan-info">
+          <h3 class="loan-type">{{ getLoanTypeLabel(loan.type) }}</h3>
+          <p class="loan-number">{{ loan.number }}</p>
+        </div>
+        <span [class]="'status-badge ' + getStatusBadgeClass(loan.status)">
+          {{ getStatusLabel(loan.status) | uppercase }}
+        </span>
+      </div>
+
+      <div class="loan-body">
+        <div class="loan-amount-section">
+          <div class="amount-group">
+            <label class="amount-label">Ukupni iznos</label>
+            <p class="amount-value">
+              {{ formatCurrency(loan.amount, loan.currency) }}
+            </p>
+          </div>
+
+          <div class="amount-group">
+            <label class="amount-label">Preostalo dugovanje</label>
+            <p class="remaining-balance">
+              {{ formatCurrency(loan.remainingBalance || 0, loan.currency) }}
+            </p>
+          </div>
+        </div>
+
+        <div class="loan-progress">
+          <div class="progress-bar-container">
+            <div
+              class="progress-bar-fill"
+              [style.width.%]="((loan.remainingBalance || 0) / loan.amount) * 100"
+            ></div>
+          </div>
+        </div>
+
+        <div class="loan-footer">
+          <p class="loan-date">
+            Sled. rata: {{ formatDate(loan.maturityDate) }}
+          </p>
+          <button
+            class="btn-details"
+            (click)="viewLoanDetails(loan.id)"
+            aria-label="Prikazi detalje kredita"
+          >
+            Detalji
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
