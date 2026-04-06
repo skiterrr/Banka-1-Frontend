@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Card, CardPage } from '../models/card.model';
+import { Card } from '../models/card.model';
+import { environment } from '../../../../environments/environment';
 
 /**
  * DTO za osnovne podatke o računu klijenta.
@@ -49,7 +50,7 @@ export interface AccountDetailsDto {
  */
 @Injectable({ providedIn: 'root' })
 export class CardService {
-  private readonly base = ${environment.apiUrl}/accounts/client;
+  private readonly base = `${environment.apiUrl}/accounts/client`;
 
   constructor(private readonly http: HttpClient) {}
 

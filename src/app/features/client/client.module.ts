@@ -21,7 +21,7 @@ import { LoanListComponent } from './components/loan-list/loan-list.component';
     AccountDetailsModalComponent,
     TransactionDetailModalComponent,
     NewPaymentComponent,
-    CardListComponent
+    CardListComponent,
     LoanListComponent
   ]
 })
