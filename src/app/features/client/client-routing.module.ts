@@ -5,6 +5,7 @@ import { AccountListComponent } from './components/account-list/account-list.com
 import { NewPaymentComponent } from './components/new-payment/new-payment.component';
 import { CardListComponent } from './components/card-list/card-list.component';
 import {RequestCardComponent} from "@/features/client/components/request-card/request-card.component";
+import {authGuard} from "@/core/guards/auth.guard";
 
 const routes: Routes = [
   {
@@ -16,7 +17,7 @@ const routes: Routes = [
     component: AccountListComponent
   },
   { path: 'cards', component: CardListComponent },
-  {path: 'cards/request', component: RequestCardComponent },
+  { path: 'cards/request', component: RequestCardComponent, canActivate: [authGuard] }
 
 
 ];

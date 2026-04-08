@@ -126,8 +126,10 @@
       </div>
 
       <div class="form-actions">
-        <a routerLink="/client/cards" class="z-btn-outline z-btn-sm">Nazad</a>
-        <button type="button" class="z-btn-primary z-btn-sm" (click)="nextFromStepOne()">
+        <a routerLink="/home/cards" class="z-btn-outline z-btn-sm">Nazad</a>
+        <button type="button" class="z-btn-primary z-btn-sm"
+                (click)="nextFromStepOne()"
+                [disabled]="!canContinueToVerification()">
           Nastavi na verifikaciju
         </button>
       </div>
@@ -172,7 +174,7 @@
 
       <div class="form-actions justify-center">
         <button type="button" class="z-btn-outline z-btn-sm" (click)="startNewRequest()">Novi zahtev</button>
-        <a routerLink="/client/cards" class="z-btn-primary z-btn-sm">Nazad na kartice</a>
+        <a routerLink="/home/cards" class="z-btn-primary z-btn-sm">Nazad na kartice</a>
       </div>
     </div>
   </div>
