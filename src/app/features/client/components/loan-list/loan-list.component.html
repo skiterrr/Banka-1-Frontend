@@ -51,8 +51,8 @@
         <!-- Card Header -->
         <div class="flex items-start justify-between mb-4">
           <div class="flex-1">
-            <h3 class="text-lg font-bold text-foreground uppercase tracking-wider">{{ getLoanTypeLabel(loan.type) }}</h3>
-            <p class="text-xs text-muted-foreground font-mono mt-1">{{ loan.number }}</p>
+            <h3 class="text-lg font-bold text-foreground uppercase tracking-wider">{{ getLoanTypeLabel(loan.loanType) }}</h3>
+            <p class="text-xs text-muted-foreground font-mono mt-1">{{ loan.loanNumber }}</p>
           </div>
           <span [ngClass]="'z-badge ' + getStatusBadgeClass(loan.status)" class="whitespace-nowrap ml-2">
             {{ getStatusLabel(loan.status) | uppercase }}

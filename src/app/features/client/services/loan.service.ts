@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import {
   Installment,
@@ -28,13 +29,15 @@ export interface EmployeeLoanFilters {
 })
 export class LoanService {
   private readonly loansUrl = `${environment.apiUrl}/credit/api/loans`;
-  private readonly myLoansUrl = `${environment.apiUrl}/credit/api/loans/my-loans`;
+  private readonly myLoansUrl = `${environment.apiUrl}/credit/api/loans/client`;
   private readonly requestsUrl = `${environment.apiUrl}/credit/api/loans/requests`;
 
   constructor(private readonly http: HttpClient) {}
 
   getMyLoans(): Observable<Loan[]> {
-    return this.http.get<Loan[]>(this.myLoansUrl);
+    return this.http.get<LoanPage<Loan>>(this.myLoansUrl).pipe(
+      map(page => page.content || [])
+    );
   }
 
   getLoanById(id: string | number): Observable<Loan> {
@@ -67,14 +70,12 @@ export class LoanService {
     return this.http.get<LoanPage<LoanRequest>>(this.requestsUrl, { params });
   }
 
-  approveLoanRequest(requestId: number): Observable<void> {
-    // TODO
-    return this.http.post<void>(`${this.requestsUrl}/${requestId}/approve`, {});
+  approveLoanRequest(requestId: number): Observable<string> {
+    return this.http.put<string>(`${this.requestsUrl}/${requestId}/approve`, {}, { responseType: 'text' as 'json' });
   }
 
-  rejectLoanRequest(requestId: number): Observable<void> {
-    // TODO
-    return this.http.post<void>(`${this.requestsUrl}/${requestId}/reject`, {});
+  rejectLoanRequest(requestId: number): Observable<string> {
+    return this.http.put<string>(`${this.requestsUrl}/${requestId}/reject`, {}, { responseType: 'text' as 'json' });
   }
 
   requestLoan(loanRequestDto: any): Observable<any> {

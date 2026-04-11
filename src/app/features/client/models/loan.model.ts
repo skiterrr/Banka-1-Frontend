@@ -13,41 +13,38 @@ export type LoanRequestStatus =
   | 'REJECTED';
 
 export enum LoanType {
-  MORTGAGE = 'MORTGAGE',
-  PERSONAL = 'PERSONAL',
-  CASH = 'CASH',
+  GOTOVINSKI = 'GOTOVINSKI',
+  STAMBENI = 'STAMBENI',
   AUTO = 'AUTO',
   STUDENT = 'STUDENT',
-  REFINANCING = 'REFINANCING',
-  BUSINESS = 'BUSINESS'
+  REFINANCIRANJE = 'REFINANCIRANJE',
+  POSLOVNI = 'POSLOVNI'
 }
 
-// Tip za opcije kredita (bez BUSINESS)
-export type LoanTypeOption = Exclude<LoanType, LoanType.BUSINESS>;
+// Tip za opcije kredita (bez POSLOVNI)
+export type LoanTypeOption = Exclude<LoanType, LoanType.POSLOVNI>;
 
 /**
  * Labele za vrste kredita
  */
 export const LoanTypeLabels: Record<string, string> = {
-  [LoanType.PERSONAL]: 'Gotovinski kredit',
-  [LoanType.CASH]: 'Gotovinski kredit',
-  [LoanType.MORTGAGE]: 'Stambeni kredit',
+  [LoanType.GOTOVINSKI]: 'Gotovinski kredit',
+  [LoanType.STAMBENI]: 'Stambeni kredit',
   [LoanType.AUTO]: 'Auto kredit',
   [LoanType.STUDENT]: 'Studentski kredit',
-  [LoanType.REFINANCING]: 'Refinansirajući kredit',
-  [LoanType.BUSINESS]: 'Poslovni kredit'
+  [LoanType.REFINANCIRANJE]: 'Refinansirajući kredit',
+  [LoanType.POSLOVNI]: 'Poslovni kredit'
 };
 
 /**
  * Periodi otplate za različite vrste kredita (u mesecima)
  */
 export const LoanRepaymentTerms: Record<string, number[]> = {
-  [LoanType.PERSONAL]: [12, 24, 36, 48, 60, 72, 84],
-  [LoanType.CASH]: [12, 24, 36, 48, 60, 72, 84],
+  [LoanType.GOTOVINSKI]: [12, 24, 36, 48, 60, 72, 84],
   [LoanType.AUTO]: [12, 24, 36, 48, 60, 72, 84],
-  [LoanType.MORTGAGE]: [60, 120, 180, 240, 300, 360],
+  [LoanType.STAMBENI]: [60, 120, 180, 240, 300, 360],
   [LoanType.STUDENT]: [12, 24, 36, 48, 60, 72, 84],
-  [LoanType.REFINANCING]: [12, 24, 36, 48, 60, 72, 84]
+  [LoanType.REFINANCIRANJE]: [12, 24, 36, 48, 60, 72, 84]
 };
 
 /**
@@ -133,17 +130,16 @@ export const LoanRequestStatusLabels: Record<LoanRequestStatus, string> = {
  */
 export interface LoanRequestDto {
   loanType: LoanType | string;
-  interestRateType: InterestRateType | string;
+  interestType: InterestRateType | string;
   amount: number;
   currency: string;
   purpose: string;
-  monthlyIncome: number;
+  monthlySalary: number;
   employmentStatus: string;
-  employmentPeriod: number;
+  currentEmploymentPeriod: number;
   accountNumber: string;
   contactPhone: string;
-  repaymentPeriod?: number;
-  housingStatus?: string;
+  repaymentPeriod: number;
 }
 
 /**

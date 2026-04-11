@@ -45,10 +45,10 @@ export class LoanRequestComponent implements OnInit, OnDestroy {
 
   // Opcije za dropdowns
   loanTypeOptions: SelectOption<LoanType>[] = [
-    { value: LoanType.PERSONAL, label: LoanTypeLabels[LoanType.PERSONAL] },
-    { value: LoanType.MORTGAGE, label: LoanTypeLabels[LoanType.MORTGAGE] },
+    { value: LoanType.GOTOVINSKI, label: LoanTypeLabels[LoanType.GOTOVINSKI] },
+    { value: LoanType.STAMBENI, label: LoanTypeLabels[LoanType.STAMBENI] },
     { value: LoanType.AUTO, label: LoanTypeLabels[LoanType.AUTO] },
-    { value: LoanType.REFINANCING, label: LoanTypeLabels[LoanType.REFINANCING] },
+    { value: LoanType.REFINANCIRANJE, label: LoanTypeLabels[LoanType.REFINANCIRANJE] },
     { value: LoanType.STUDENT, label: LoanTypeLabels[LoanType.STUDENT] }
   ];
 
@@ -112,9 +112,9 @@ export class LoanRequestComponent implements OnInit, OnDestroy {
 
       // Sekcija 2: Finansijski podaci
       purpose: ['', Validators.required],
-      monthlyIncome: [null, [Validators.required, Validators.min(1)]],
+      monthlySalary: [null, [Validators.required, Validators.min(1)]],
       employmentStatus: [null, Validators.required],
-      employmentPeriod: [null, [Validators.required, Validators.min(0)]],
+      currentEmploymentPeriod: [null, [Validators.required, Validators.min(0)]],
 
       // Sekcija 3: Račun i kontakt
       accountNumber: ['', Validators.required],
@@ -237,14 +237,14 @@ export class LoanRequestComponent implements OnInit, OnDestroy {
 
     const loanRequestDto: LoanRequestDto = {
       loanType: this.form.get('loanType')?.value,
-      interestRateType: this.form.get('interestRateType')?.value,
+      interestType: this.form.get('interestRateType')?.value,
       amount: this.form.get('amount')?.value,
       currency: this.form.get('currency')?.value,
       repaymentPeriod: this.form.get('repaymentPeriod')?.value,
       purpose: this.form.get('purpose')?.value,
-      monthlyIncome: this.form.get('monthlyIncome')?.value,
+      monthlySalary: this.form.get('monthlySalary')?.value,
       employmentStatus: this.form.get('employmentStatus')?.value,
-      employmentPeriod: this.form.get('employmentPeriod')?.value,
+      currentEmploymentPeriod: this.form.get('currentEmploymentPeriod')?.value,
       accountNumber: this.form.get('accountNumber')?.value,
       contactPhone: this.form.get('contactPhone')?.value
     };

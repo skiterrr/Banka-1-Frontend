@@ -40,10 +40,10 @@ export class LoanRequestManagementComponent implements OnInit, OnDestroy {
 
   readonly loanTypeOptions: { value: LoanType | ''; label: string }[] = [
     { value: '', label: 'Sve vrste kredita' },
-    { value: LoanType.CASH, label: 'Gotovinski' },
-    { value: LoanType.MORTGAGE, label: 'Stambeni' },
+    { value: LoanType.GOTOVINSKI, label: 'Gotovinski' },
+    { value: LoanType.STAMBENI, label: 'Stambeni' },
     { value: LoanType.AUTO, label: 'Auto' },
-    { value: LoanType.REFINANCING, label: 'Refinansirajući' },
+    { value: LoanType.REFINANCIRANJE, label: 'Refinansirajući' },
     { value: LoanType.STUDENT, label: 'Studentski' },
   ];
 

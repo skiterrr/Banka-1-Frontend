@@ -118,9 +118,9 @@
 
           <!-- Mesečna plata -->
           <div class="space-y-1.5">
-            <label for="monthlyIncome" class="z-label">Mesečna plata <span class="text-red-500">*</span></label>
-            <input id="monthlyIncome" type="number" formControlName="monthlyIncome" class="z-input" min="1" step="100" placeholder="Unesite mesečnu platu" />
-            <small *ngIf="isInvalid('monthlyIncome')" class="z-error">{{ getErrorMessage('monthlyIncome') }}</small>
+            <label for="monthlySalary" class="z-label">Mesečna plata <span class="text-red-500">*</span></label>
+            <input id="monthlySalary" type="number" formControlName="monthlySalary" class="z-input" min="1" step="100" placeholder="Unesite mesečnu platu" />
+            <small *ngIf="isInvalid('monthlySalary')" class="z-error">{{ getErrorMessage('monthlySalary') }}</small>
           </div>
 
           <!-- Status zaposlenja -->
@@ -137,9 +137,9 @@
 
           <!-- Period zaposlenja -->
           <div class="space-y-1.5">
-            <label for="employmentPeriod" class="z-label">Period zaposlenja (meseci) <span class="text-red-500">*</span></label>
-            <input id="employmentPeriod" type="number" formControlName="employmentPeriod" class="z-input" min="0" step="1" placeholder="Npr. 24 meseca" />
-            <small *ngIf="isInvalid('employmentPeriod')" class="z-error">{{ getErrorMessage('employmentPeriod') }}</small>
+            <label for="currentEmploymentPeriod" class="z-label">Period zaposlenja (meseci) <span class="text-red-500">*</span></label>
+            <input id="currentEmploymentPeriod" type="number" formControlName="currentEmploymentPeriod" class="z-input" min="0" step="1" placeholder="Npr. 24 meseca" />
+            <small *ngIf="isInvalid('currentEmploymentPeriod')" class="z-error">{{ getErrorMessage('currentEmploymentPeriod') }}</small>
           </div>
         </div>
       </div>
