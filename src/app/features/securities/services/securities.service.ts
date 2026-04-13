@@ -278,16 +278,32 @@ export class SecuritiesService {
     );
   }
 
-  /**
-   * Get stock by ticker
-   */
-  getStockByTicker(ticker: string): Observable<Stock> {
-    return this.getStocks({}, 0, 100).pipe(
-      map(page => {
-        const stock = page.content.find(s => s.ticker === ticker);
-        if (!stock) throw new Error(`Stock ${ticker} not found`);
-        return stock;
-      })
+  getStockById(id: number): Observable<Stock> {
+    const params = new HttpParams().set('period', 'DAY');
+    return this.http.get<any>(`${environment.apiUrl}/stock/api/listings/${id}`, { params }).pipe(
+      map((item: any) => ({
+        id: item.listingId,
+        ticker: item.ticker ?? '',
+        name: item.name ?? '',
+        exchange: item.exchangeMICCode ?? '',
+        price: item.price ?? 0,
+        currency: 'USD',
+        change: item.change ?? 0,
+        changePercent: item.changePercent ?? 0,
+        volume: item.volume ?? 0,
+        maintenanceMargin: 0,
+        initialMarginCost: item.initialMarginCost ?? 0,
+        type: 'STOCK' as const,
+        lastUpdated: item.lastRefresh ?? new Date().toISOString(),
+        high: item.price ?? 0,
+        low: item.price ?? 0,
+        open: item.price ?? 0,
+        previousClose: item.price ?? 0,
+        bid: item.bid ?? 0,
+        ask: item.ask ?? 0,
+        dividend: item.stockDetails?.dividendYield ?? undefined,
+        dividendYield: item.stockDetails?.dividendYield ?? undefined,
+      } as Stock))
     );
   }
 
