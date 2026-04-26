@@ -178,4 +178,11 @@ export class ExchangeManagerService {
   getExchanges(): Observable<ExchangeInfo[]> {
     return this.availableExchanges$;
   }
+
+  /**
+   * Vraća trenutni status mock podataka
+   */
+  get isMockEnabled(): boolean {
+    return this.useMockDataSubject.value;
+  }
 }

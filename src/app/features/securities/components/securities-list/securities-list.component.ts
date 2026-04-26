@@ -65,13 +65,12 @@ export class SecuritiesListComponent implements OnInit, OnDestroy {
     this.isClient = this.authService.isClient();
     
     // Pretplati se na promene mock/live režima - automatski učita nove podatke
+    // BehaviorSubject odmah emituje, što će pozvati loadSecurities() i učitati podatke
     this.exchangeManager.useMockData$.pipe(takeUntil(this.destroy$)).subscribe(isMock => {
       this.useMockData = isMock;
       this.currentPage = 0; // Reset na prvu stranicu
       this.loadSecurities(); // Učitaj podatke
     });
-    
-    this.loadSecurities();
   }
 
   ngOnDestroy(): void {
@@ -110,20 +109,27 @@ export class SecuritiesListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.errorMessage = '';
 
+    // Automatski dodaj dostupne berze kao filter da se ne prikazuju hartije sa nepostojeći berzama
+    const availableMICCodes = this.exchangeManager.getAvailableExchangeCodes().join(',');
+    const filtersWithExchange = {
+      ...this.filters,
+      exchange: availableMICCodes
+    };
+
     let request$: Observable<SecuritiesPage<Security>>;
     switch (this.activeTab) {
       case 'stocks':
         // Use client-specific endpoint for stock clients
         if (this.isClient) {
           request$ = this.securitiesService.getClientStocks(
-            this.filters,
+            filtersWithExchange,
             this.currentPage,
             this.pageSize,
             this.sortConfig
           );
         } else {
           request$ = this.securitiesService.getStocks(
-            this.filters,
+            filtersWithExchange,
             this.currentPage,
             this.pageSize,
             this.sortConfig
@@ -132,7 +138,7 @@ export class SecuritiesListComponent implements OnInit, OnDestroy {
         break;
       case 'futures':
         request$ = this.securitiesService.getFutures(
-          this.filters,
+          filtersWithExchange,
           this.currentPage,
           this.pageSize,
           this.sortConfig
@@ -140,7 +146,7 @@ export class SecuritiesListComponent implements OnInit, OnDestroy {
         break;
       case 'forex':
         request$ = this.securitiesService.getForex(
-          this.filters,
+          filtersWithExchange,
           this.currentPage,
           this.pageSize,
           this.sortConfig
@@ -150,14 +156,11 @@ export class SecuritiesListComponent implements OnInit, OnDestroy {
 
     request$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (page: SecuritiesPage<Security>) => {
-        // Filtriraj samo hartije sa validnim berzama
-        const validSecurities = page.content.filter(security =>
-          this.exchangeManager.isExchangeAvailable((security as any).exchange)
-        );
-
-        this.securities = validSecurities;
-        this.totalElements = validSecurities.length;
-        this.totalPages = Math.ceil(validSecurities.length / this.pageSize);
+        // Koristi direktno podatke iz backend-a bez dodatnog filtriranja
+        // Backend je već filtrirao po dostupnim berzama ako je potrebno
+        this.securities = page.content;
+        this.totalElements = page.totalElements;
+        this.totalPages = page.totalPages;
         this.isLoading = false;
       },
       error: (err: Error) => {

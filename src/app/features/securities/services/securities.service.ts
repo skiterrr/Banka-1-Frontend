@@ -76,6 +76,11 @@ export class SecuritiesService {
       ask: item.price + 0.01,
     }));
 
+    if (filters.exchange) {
+      const allowedExchanges = filters.exchange.split(',').map(ex => ex.trim());
+      stocks = stocks.filter(s => allowedExchanges.includes(s.exchange));
+    }
+
     if (filters.search) {
       const q = filters.search.toLowerCase();
       stocks = stocks.filter(s =>
@@ -123,6 +128,11 @@ export class SecuritiesService {
       ask: item.price + 0.01,
     }));
 
+    if (filters.exchange) {
+      const allowedExchanges = filters.exchange.split(',').map(ex => ex.trim());
+      futures = futures.filter(f => allowedExchanges.includes(f.exchange));
+    }
+
     if (filters.search) {
       const q = filters.search.toLowerCase();
       futures = futures.filter(f =>
@@ -169,6 +179,11 @@ export class SecuritiesService {
       open: item.price,
       previousClose: item.price - item.change,
     }));
+
+    if (filters.exchange) {
+      const allowedExchanges = filters.exchange.split(',').map(ex => ex.trim());
+      forexes = forexes.filter(f => allowedExchanges.includes(f.exchange));
+    }
 
     if (filters.search) {
       const q = filters.search.toLowerCase();
@@ -270,7 +285,7 @@ export class SecuritiesService {
     sort?: SortConfig
   ): Observable<SecuritiesPage<Stock>> {
     // Check if mock data should be used
-    if (this.exchangeManager['useMockDataSubject']?.value) {
+    if (this.exchangeManager.isMockEnabled) {
       return of(this.getMockStocksPage(filters, page, size, sort)).pipe(delay(300));
     }
 
@@ -287,7 +302,7 @@ export class SecuritiesService {
     sort?: SortConfig
   ): Observable<SecuritiesPage<Stock>> {
     // Check if mock data should be used
-    if (this.exchangeManager['useMockDataSubject']?.value) {
+    if (this.exchangeManager.isMockEnabled) {
       return of(this.getMockStocksPage(filters, page, size, sort)).pipe(delay(300));
     }
 
@@ -324,7 +339,7 @@ export class SecuritiesService {
     sort?: SortConfig
   ): Observable<SecuritiesPage<Future>> {
     // Check if mock data should be used
-    if (this.exchangeManager['useMockDataSubject']?.value) {
+    if (this.exchangeManager.isMockEnabled) {
       return of(this.getMockFuturesPage(filters, page, size, sort)).pipe(delay(300));
     }
 
@@ -411,7 +426,7 @@ export class SecuritiesService {
     sort?: SortConfig
   ): Observable<SecuritiesPage<Forex>> {
     // Check if mock data should be used
-    if (this.exchangeManager['useMockDataSubject']?.value) {
+    if (this.exchangeManager.isMockEnabled) {
       return of(this.getMockForexPage(filters, page, size, sort)).pipe(delay(300));
     }
 
